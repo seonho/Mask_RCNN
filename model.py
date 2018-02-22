@@ -1760,6 +1760,12 @@ class MaskRCNN():
         self.config = config
         self.model_dir = model_dir
         self.set_log_dir()
+        
+        from keras.backend.tensorflow_backend import set_session
+        config_ = tf.ConfigProto()
+        config_.gpu_options.allow_growth = True
+        set_session(tf.Session(config=config_))
+        
         self.keras_model = self.build(mode=mode, config=config)
 
     def build(self, mode, config):
